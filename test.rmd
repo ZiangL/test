@@ -19,12 +19,12 @@ author:
   email: jwei55@student.monash.edu
   correspondingauthor: true
   qualifications:  Master
-- familyname: XXX
-  othernames: XXX
-  address: XXX
-  email: XXX
+- familyname: Xu
+  othernames: Qin 
+  address: 40 Carboni crescent 
+  email: qxuu0023@student.monash.edu
   correspondingauthor: true
-  qualifications:  XXX
+  qualifications:  Mbat
 department: Our consultancy \newline add names &\newline add names
 organization: Australian Government COVID19
 bibliography: references.bib
@@ -86,5 +86,19 @@ data
 #df
 ```
 The result of this table illustrate that ......
+
+\section*{Country XX3 and YY3}
+
+```{r}
+data <- read.csv("Assignment3_data.csv")
+
+head (data)
+glimpise(data)
+```
+
+
+```{r}
+the result shows
+```
 
 
