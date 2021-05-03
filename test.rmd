@@ -36,14 +36,14 @@ output:
     toc: false
 ---
 
-```{r , echo = FALSE, message = FALSE, warning = FALSE}
+```{r eval = TRUE, echo = FALSE, message = FALSE, warning = FALSE}
 # Libraries
 
 library(tidyverse)
 library(readr)
 library(kableExtra)
 library(bookdown)
-
+library(ggplot2)
 ```
 
 
@@ -52,19 +52,55 @@ library(bookdown)
 
 \section*{Country XX2 and YY2}
 
-```{r}
+```{r eval = TRUE, echo = FALSE}
 dat <- read.csv("Assignment3_data.csv")
 dat1 <- dat %>%
   filter(Country_Name %in% c("China",
                              "Brazil")) %>%
   group_by(Year) 
 ```
-```{r}
+
+```{r tbl-1, eval = TRUE, echo = FALSE, warning = FALSE, message = FALSE}
+d1 <- dat %>%
+  filter(Country_Name %in% c("China",
+                             "Brazil")) %>%
+  select(Country_Name,
+         IncomeGroup,
+         Urban_population) %>%
+  group_by(Country_Name, IncomeGroup) %>%
+  summarise(population = sum(Urban_population, na.rm = TRUE)) 
+d2 <- d1 %>%
+  select(Country_Name,
+         IncomeGroup)
+kable(d2)
+```
+
+```{r fig-1, fig.cap="CO2 emissions per capita per year for both countries (tonnes)", fig.align='center', eval = TRUE, echo = FALSE, warning=FALSE, message=FALSE}
 ggplot(dat1, aes(x = Year,
                  y = CO2_emissions_metric_tons_per_capita,
                  color = Country_Name)) + 
   geom_line() + 
   labs(x = "Year",
+       y = "CO2 emissions tons/capita")
+```
+
+```{r eval = TRUE, echo = FALSE}
+dat2 <- dat %>%
+  filter(Country_Name %in% c("China",
+                             "Brazil")) %>%
+  select(Country_Name,
+         CO2_emissions_metric_tons_per_capita,
+         Urban_population) %>%
+  group_by(Urban_population) %>%
+  rename(CO2_emissions = CO2_emissions_metric_tons_per_capita) 
+  
+```
+```{r fig-2, fig.cap="CO2 emissions per capita and urban population", fig.align='center', eval = TRUE, echo = FALSE, warning=FALSE, message=FALSE}
+ggplot(dat2, aes(x = Urban_population,
+                 y = CO2_emissions,
+                 color = Country_Name)) + 
+  geom_line() + 
+  labs(x = "Urban population",
        y = "CO2 emissions tons/capita")
 ```
 
