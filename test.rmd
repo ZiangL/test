@@ -8,9 +8,17 @@ author:
   correspondingauthor: true
   qualifications:  XXX
 - familyname: XXXX
-  othernames: Reports
-  address: XXX
-  qualifications: XXX
+  othernames: XXX
+  address: Monash Universtidy
+  email: XXX
+  correspondingauthor: true
+  qualifications:  XXX
+- familyname: Wei
+  othernames: Juntong
+  address: Monash Universtidy
+  email: jwei55@student.monash.edu
+  correspondingauthor: true
+  qualifications:  Master
 - familyname: XXX
   othernames: XXX
   address: XXX
@@ -70,13 +78,12 @@ kable(dat1)
 
 ```{r}
 data <- read.csv("Assignment3_data.csv") %>% 
-  filter(Country_Name == "Japan" | Country_Name == "World") %>% 
+  filter(Country_Name == "Japan" | Country_Name == "Australia") %>% 
   group_by(Country_Name)
-
-
-df <- data %>% 
-  summarise(Average_population = mean(Urban_population))
-df
+data
+#df <- data %>% 
+  #summarise(Average_population = mean(Urban_population))
+#df
 ```
 The result of this table illustrate that ......
 
