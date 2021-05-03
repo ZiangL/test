@@ -54,5 +54,16 @@ library(bookdown)
 
 \section*{Country XX3 and YY3}
 
+```{r}
+data <- read.csv("Assignment3_data.csv") %>% 
+  filter(Country_Name == "Japan" | Country_Name == "World") %>% 
+  group_by(Country_Name)
+
+
+df <- data %>% 
+  summarise(Average_population = mean(Urban_population))
+df
+```
+The result of this table illustrate that ......
 
 
