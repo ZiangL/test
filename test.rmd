@@ -51,6 +51,20 @@ library(bookdown)
 \section*{Country XX1 and YY1"}
 
 \section*{Country XX2 and YY2}
+```{r}
+library(tidyverse)
+library(kableExtra)
+```
+
+```{r}
+dat <- read.csv("Assignment3_data.csv")
+dat1 <- dat %>%
+  filter(Country_Name %in% c("China",
+                             "Japan")) %>%
+  group_by(Country_Name) %>%
+  summarise(CO2 = sum(CO2_emissions_metric_tons_per_capita))
+kable(dat1)
+```
 
 \section*{Country XX3 and YY3}
 
