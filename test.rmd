@@ -115,35 +115,61 @@ data
 ```
 
 ## Comparsion of OF CO2 emission between Australia and India
-
+# First research question: Does the increase of urban population have a influence on a country's CO2 emmission
 
 ```{r table1}
-countries_urban <- data %>% 
-  group_by(Country_Name) %>% 
-    filter (Country_Name == "Australia" | Country_Name == "India" ) %>% 
-  select(-c("Year","Region","CO2_emissions_metric_tons_per_capita","Energy_use_kg_of_oil_equivalent_per_capita")) %>% 
-  summarise ( Urban_population = sum(Urban_population, na.rm=TRUE)) %>% 
-  arrange(desc(Urban_population))
-countries_urban
+urban  <- data %>% 
+    filter (Country_Name == "Australia" | Country_Name == "India" )
+urban
 
-knitr::kable (countries_urban ,caption = "The total Urban_population from 1960 to 2014 for both Australia and India") %>% kable_styling()
+urban_table <- data %>% 
+  filter (Country_Name == "Australia" | Country_Name == "India" ) %>% 
+  select (c("Country_Name","Urban_population","Year")) %>% 
+  filter(Year == "1960" | Year == "2018")  
+urban_table
+
+knitr::kable (urban_table ,caption = "The urban population in 1960 and 2018 for both Australia and India") %>% kable_styling()
 ```
-In Table \@ref(tab:table1) we compare the Urban_population of India and Australia from 1960 to 2014. 
+In Table \@ref(tab:table1) we compare the Urban_population of India and Australia in both 1960 and 2014. 
 
-```{r urban, fig.cap = "Comparison of Urban_population of India and Australia from 1960 to 2014."}
-plot_urban<- ggplot(data = countries_urban, 
-                      aes(x = Country_Name,
+```{r fig1, fig.cap = "Comparison of Urban_population of India and Australia from 1960 to 2014."}
+plot_urban<- ggplot(data = urban, 
+                      aes(x = Year,
                           y= Urban_population,
-                          fill= Country_Name)) +
-
-               geom_col()
+                          )) +
+    geom_line(aes(color = Country_Name), size = 2) +
+    ggtitle("Total urban population in india and Australia ")
 plot_urban
 ```
-In Figure \@ref(fig:urban), we have plotted the total number of urban population for india and Australia from 1960 to 2014.
+In Figure \@ref(fig:fig1), we have plotted the total number of urban population for india and Australia from 1960 to 2014.
 
-From the table above, we can see that the urban population for India is 13754306693 where as the urban population for Australia is 849155686. The plot above also shows a siginificant difference in urabn population between the two country, with India's urban population being much more higher compared to Australia.
 
-```{r}
+
+
+```{r range}
+
+urban_aus_diff <- urban %>% 
+  filter( Country_Name == "Australia") 
+  max(urban_aus_diff$Urban_population)- min(urban_aus_diff$Urban_population)
+urban_aus_diff
+
+urban_india_diff <- urban %>% 
+  filter( Country_Name == "India") 
+  max(urban_india_diff$Urban_population)- min(urban_india_diff$Urban_population)
+urban_india_diff
+
+
+
+```
+
+
+
+
+
+
+
+
+```{r co2_emission_data}
 co2_emission <- data %>% 
   filter( Country_Name =="Australia" |Country_Name =="India") %>% 
   select (c("Country_Name","CO2_emissions_metric_tons_per_capita","Year" )) 
@@ -151,5 +177,20 @@ co2_emission <- data %>%
 co2_emission
 
 ```
+
+```{r fig2, fig.cap = "Comparing co2_emission per capita from 1960 to 2014 in India and Australia ."}
+ co2_emission_plot<- ggplot(data = co2_emission, 
+                      aes(x = Year,
+                          y= CO2_emissions_metric_tons_per_capita)) +
+
+               geom_line(aes(color = Country_Name), size = 2) +
+     ggtitle("C02_emission per capita in India and Australia")
+
+ co2_emission_plot
+
+```
+In Figure \@ref(fig:fig2), we have plotted the co2_emission per capita from 1960 to 2014 in India and Australia. 
+
+
 
 
