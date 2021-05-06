@@ -91,14 +91,27 @@ The result of this table illustrate that ......
 
 ```{r}
 data <- read.csv("Assignment3_data.csv")
-
 head (data)
-glimpise(data)
+glimpse(data)
+dim(data)
 ```
+
+## Comparsion of OF CO2 emission between Australia and India
 
 
 ```{r}
-the result shows
+countries <- data %>% 
+  group_by(Country_Name) %>% 
+    filter (Country_Name == "Australia" | Country_Name == "India" ) %>% 
+  select(c("Country_Name","CO2_emissions_metric_tons_per_capita")) %>% 
+  summarise (CO2_emissions_metric_tons_per_capita = sum(CO2_emissions_metric_tons_per_capita, na.rm=TRUE)) %>% 
+  arrange(desc(CO2_emissions_metric_tons_per_capita))
+countries 
 ```
 
+# Presnting it as a table 
+```{r}
+
+knitr::kable (gender_maths ,caption = "Average math score for female and male students", ditgits=2) %>% kable_styling()
+```
 
