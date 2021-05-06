@@ -50,8 +50,6 @@ output:
 library(tidyverse)
 library(readr)
 library(kableExtra)
-library(bookdown)
-
 ```
 
 
@@ -87,7 +85,26 @@ data
 ```
 The result of this table illustrate that ......
 
-\section*{Country XX3 and YY3}
+\section*{Country Australia and India}
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE, 
+                      cache = FALSE, 
+                      cache.lazy = FALSE,
+                      eval = TRUE,
+                      fig.align= "center")
+
+```
+
+```{r loading libraries, message = FALSE}
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(dslabs)
+library(kableExtra)
+library(bookdown)
+library(knitr)
+```
 
 ```{r}
 data <- read.csv("Assignment3_data.csv")
@@ -107,11 +124,8 @@ countries <- data %>%
   summarise (CO2_emissions_metric_tons_per_capita = sum(CO2_emissions_metric_tons_per_capita, na.rm=TRUE)) %>% 
   arrange(desc(CO2_emissions_metric_tons_per_capita))
 countries 
-```
 
-# Presnting it as a table 
-```{r}
-
-knitr::kable (gender_maths ,caption = "Average math score for female and male students", ditgits=2) %>% kable_styling()
+knitr::kable (countries ,caption = "The total CO2_emissions_metric_ton_per_capita from 1960 to 2014 for both Australia and India") %>% kable_styling()
 ```
+In Table \@ref(tab:table1) we compare the total CO2 emissions metric tons per capita  
 
