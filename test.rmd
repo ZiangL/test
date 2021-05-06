@@ -96,7 +96,7 @@ knitr::opts_chunk$set(echo = FALSE,
 
 ```
 
-```{r loading libraries, message = FALSE}
+```{r}
 library(tidyverse)
 library(ggplot2)
 library(dplyr)
@@ -111,21 +111,45 @@ data <- read.csv("Assignment3_data.csv")
 head (data)
 glimpse(data)
 dim(data)
+data
 ```
 
 ## Comparsion of OF CO2 emission between Australia and India
 
 
-```{r}
-countries <- data %>% 
+```{r table1}
+countries_urban <- data %>% 
   group_by(Country_Name) %>% 
     filter (Country_Name == "Australia" | Country_Name == "India" ) %>% 
-  select(c("Country_Name","CO2_emissions_metric_tons_per_capita")) %>% 
-  summarise (CO2_emissions_metric_tons_per_capita = sum(CO2_emissions_metric_tons_per_capita, na.rm=TRUE)) %>% 
-  arrange(desc(CO2_emissions_metric_tons_per_capita))
-countries 
+  select(-c("Year","Region","CO2_emissions_metric_tons_per_capita","Energy_use_kg_of_oil_equivalent_per_capita")) %>% 
+  summarise ( Urban_population = sum(Urban_population, na.rm=TRUE)) %>% 
+  arrange(desc(Urban_population))
+countries_urban
 
-knitr::kable (countries ,caption = "The total CO2_emissions_metric_ton_per_capita from 1960 to 2014 for both Australia and India") %>% kable_styling()
+knitr::kable (countries_urban ,caption = "The total Urban_population from 1960 to 2014 for both Australia and India") %>% kable_styling()
 ```
-In Table \@ref(tab:table1) we compare the total CO2 emissions metric tons per capita  
+In Table \@ref(tab:table1) we compare the Urban_population of India and Australia from 1960 to 2014. 
+
+```{r urban, fig.cap = "Comparison of Urban_population of India and Australia from 1960 to 2014."}
+plot_urban<- ggplot(data = countries_urban, 
+                      aes(x = Country_Name,
+                          y= Urban_population,
+                          fill= Country_Name)) +
+
+               geom_col()
+plot_urban
+```
+In Figure \@ref(fig:urban), we have plotted the total number of urban population for india and Australia from 1960 to 2014.
+
+From the table above, we can see that the urban population for India is 13754306693 where as the urban population for Australia is 849155686. The plot above also shows a siginificant difference in urabn population between the two country, with India's urban population being much more higher compared to Australia.
+
+```{r}
+co2_emission <- data %>% 
+  filter( Country_Name =="Australia" |Country_Name =="India") %>% 
+  select (c("Country_Name","CO2_emissions_metric_tons_per_capita","Year" )) 
+  
+co2_emission
+
+```
+
 
