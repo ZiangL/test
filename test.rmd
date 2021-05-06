@@ -47,8 +47,29 @@ library(bookdown)
 ```
 
 
+Compere the different of the C02 emissions between high income group country and middle high income group in Middle East & North Africa.
 
-\section*{Country XX1 and YY1"}
+\section*{Country Kuwait and Lebanon"}
+```{r}
+data <- read.csv("Assignment3_data.csv")
+
+Total <- data %>%
+  filter (Country_Name == "Lebanon" | Country_Name == "Kuwait") %>%
+  group_by(Country_Name) %>%
+  mutate(Total_CO2_emissions = CO2_emissions_metric_tons_per_capita *Urban_population )
+
+Tab <- Total %>%
+  select (Country_Name, Year, Total_CO2_emissions)
+
+knitr::kable(Tab, caption = "Total CO2 emissions in Kuwait and Lebanon", col.names = c("Country", "Year", "Totol CO2 emissions"))
+
+
+ggplot(Total) +
+  geom_line(aes( x= Year, y= CO2_emissions_metric_tons_per_capita, 
+                 group= Country_Name, color= Country_Name )) 
+  
+```
+
 
 \section*{Country XX2 and YY2}
 
